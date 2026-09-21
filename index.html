@@ -60,6 +60,13 @@ nav { position: sticky; top: 0; z-index: 100; background: var(--surface); border
 .nav-logo { height: 28px; width: auto; vertical-align: middle; margin-right: 7px; display: inline-block; }
 .theme-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: transparent; cursor: pointer; color: var(--muted); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s, color 0.15s; }
 .theme-btn:hover { background: var(--border); color: var(--text); }
+.detail-figure img.fig-dark { display: none; }
+:root[data-theme="dark"] .detail-figure img.fig-dark { display: block; }
+:root[data-theme="dark"] .detail-figure img.fig-light { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .detail-figure img.fig-dark { display: block; }
+  :root:not([data-theme="light"]) .detail-figure img.fig-light { display: none; }
+}
 .bio-av-wrap { position: relative; width: 110px; height: 110px; margin: 0 auto 20px; }
 .bio-av-photo { position: absolute; inset: 0; width: 110px; height: 110px; border-radius: 50%; object-fit: cover; object-position: center top; z-index: 1; border: 3px solid var(--border); }
 .bio-av-init { width: 110px; height: 110px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--ff-d); font-size: 1.6rem; font-weight: 600; position: absolute; inset: 0; }
@@ -728,7 +735,8 @@ document.querySelectorAll('.person-card').forEach(card => {
       <div class="detail-content" id="dc-falciparum">
         <h2>Antigenic diversity, strain structure &amp; drug resistance in <em>Plasmodium falciparum</em></h2>
         <figure class="detail-figure" id="fig-falciparum-wrap">
-          <img src="photos/fig-falciparum.png" alt="P. falciparum figure" onerror="this.parentElement.style.display='none';document.getElementById('fig-falciparum-ph').style.display='flex'">
+          <img class="fig-light" src="photos/fig-falciparum.png" alt="P. falciparum figure" onerror="this.style.display='none'">
+          <img class="fig-dark" src="photos/fig-falciparum-dark.png" alt="P. falciparum figure" onerror="this.parentElement.style.display='none';document.getElementById('fig-falciparum-ph').style.display='flex'">
         </figure>
         <div class="detail-figure-ph" id="fig-falciparum-ph" style="display:none">Add photos/fig-falciparum.png</div>
 
@@ -810,7 +818,8 @@ document.querySelectorAll('.person-card').forEach(card => {
       <div class="detail-content" id="dc-ecoevo">
         <h2>Eco-evolutionary dynamics of strain diversity &amp; turnover</h2>
         <figure class="detail-figure" id="fig-ecoevo-wrap">
-          <img src="photos/fig-ecoevo.png" alt="Eco-evo dynamics figure" onerror="this.parentElement.style.display='none';document.getElementById('fig-ecoevo-ph').style.display='flex'">
+          <img class="fig-light" src="photos/fig-ecoevo-light.png" alt="Eco-evo dynamics figure" onerror="this.style.display='none'">
+          <img class="fig-dark" src="photos/fig-ecoevo.png" alt="Eco-evo dynamics figure" onerror="this.parentElement.style.display='none';document.getElementById('fig-ecoevo-ph').style.display='flex'">
         </figure>
         <div class="detail-figure-ph" id="fig-ecoevo-ph" style="display:none">Add photos/fig-ecoevo.png</div>
         <div class="detail-section">
