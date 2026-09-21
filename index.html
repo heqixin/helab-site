@@ -1,0 +1,943 @@
+<title>The He Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap">
+
+<style>
+:root {
+  --bg:       #F7F8FC;
+  --surface:  #FFFFFF;
+  --surface2: #EEEFFE;
+  --text:     #1A1A2E;
+  --muted:    #5C6178;
+  --subtle:   #9BA3BF;
+  --border:   #DDE1EE;
+  --navy:     #1B2559;
+  --navy-bg:  #E8ECF8;
+  --teal:     #0D9488;
+  --teal-bg:  #E4F5F3;
+  --ff-d:     'Lora', Georgia, serif;
+  --ff-b:     'DM Sans', system-ui, sans-serif;
+  --rr:       8px;
+  --w:        940px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:      #0E1525; --surface: #172035; --surface2: #1C2840;
+    --text:    #EEF2FF; --muted: #8A95B5; --subtle: #5C6585;
+    --border:  #263147; --navy: #7B9EF5; --navy-bg: #162038;
+    --teal:    #2DD4BF; --teal-bg: #0D2E2B;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:      #0E1525; --surface: #172035; --surface2: #1C2840;
+  --text:    #EEF2FF; --muted: #8A95B5; --subtle: #5C6585;
+  --border:  #263147; --navy: #7B9EF5; --navy-bg: #162038;
+  --teal:    #2DD4BF; --teal-bg: #0D2E2B;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--ff-b); background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+em { font-style: italic; }
+sub { font-size: 0.75em; }
+
+/* NAV */
+nav { position: sticky; top: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); }
+.nav-wrap { max-width: var(--w); margin: 0 auto; padding: 0 2rem; height: 54px; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+.nav-brand { font-family: var(--ff-d); font-size: 0.9375rem; font-weight: 600; color: var(--text); text-decoration: none; white-space: nowrap; }
+.nav-links { display: flex; overflow-x: auto; scrollbar-width: none; }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a { font-size: 0.8125rem; font-weight: 500; color: var(--muted); text-decoration: none; padding: 0 0.625rem; white-space: nowrap; transition: color 0.1s; letter-spacing: 0.01em; }
+.nav-links a:hover { color: var(--text); }
+
+/* HERO */
+.hero { max-width: var(--w); margin: 0 auto; padding: 80px 2rem 68px; position: relative; overflow: hidden; }
+.hero-deco { position: absolute; pointer-events: none; user-select: none; opacity: 0.09; }
+.hero-deco-antibodies { right: -30px; top: -20px; width: 360px; height: auto; }
+.hero-deco-parasites { left: -10px; bottom: -30px; width: 280px; height: auto; transform: scaleX(-1); }
+.nav-logo { height: 28px; width: auto; vertical-align: middle; margin-right: 7px; display: inline-block; }
+.bio-av-wrap { position: relative; width: 110px; height: 110px; margin: 0 auto 20px; }
+.bio-av-photo { position: absolute; inset: 0; width: 110px; height: 110px; border-radius: 50%; object-fit: cover; object-position: center top; z-index: 1; border: 3px solid var(--border); }
+.bio-av-init { width: 110px; height: 110px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--ff-d); font-size: 1.6rem; font-weight: 600; position: absolute; inset: 0; }
+.eyebrow { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 20px; }
+.hero h1 { font-family: var(--ff-d); font-size: clamp(2rem, 4.5vw, 2.875rem); font-weight: 500; line-height: 1.2; color: var(--text); text-wrap: balance; max-width: 700px; margin-bottom: 20px; }
+.hero-sub { font-size: 1rem; color: var(--muted); max-width: 580px; line-height: 1.8; margin-bottom: 40px; }
+.hero-meta { display: flex; gap: 48px; flex-wrap: wrap; }
+.hero-meta-item .n { font-family: var(--ff-d); font-size: 1.75rem; font-weight: 500; color: var(--text); line-height: 1; }
+.hero-meta-item .l { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--subtle); margin-top: 4px; }
+
+/* LAYOUT */
+hr.div { border: none; border-top: 1px solid var(--border); }
+.section { max-width: var(--w); margin: 0 auto; padding: 60px 2rem; }
+.lbl { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 32px; }
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 56px; align-items: start; }
+.about-text p { font-size: 0.9375rem; color: var(--muted); line-height: 1.85; margin-bottom: 1em; }
+.about-text p:last-child { margin-bottom: 0; }
+.meta-row { padding: 11px 0; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 2px; }
+.meta-row:first-child { border-top: 1px solid var(--border); }
+.meta-key { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--subtle); }
+.meta-val { font-size: 0.875rem; color: var(--text); line-height: 1.5; }
+
+/* RESEARCH */
+.research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--rr); overflow: hidden; }
+.research-card { background: var(--surface); padding: 28px 24px; cursor: pointer; transition: background 0.15s; display: flex; flex-direction: column; }
+.research-card:hover { background: var(--surface2); }
+.rtag { display: inline-block; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--teal); background: var(--teal-bg); padding: 3px 8px; border-radius: 4px; margin-bottom: 12px; }
+.research-card h3 { font-family: var(--ff-d); font-size: 1rem; font-weight: 600; line-height: 1.35; color: var(--text); margin-bottom: 9px; }
+.research-card p { font-size: 0.8125rem; color: var(--muted); line-height: 1.75; flex: 1; }
+.card-cta { font-size: 0.75rem; font-weight: 600; color: var(--teal); margin-top: 16px; letter-spacing: 0.02em; }
+
+/* DETAIL PANEL */
+.detail-overlay { position: fixed; inset: 0; background: rgba(10,15,30,0.55); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+.detail-overlay.open { opacity: 1; pointer-events: all; }
+.detail-panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(680px, 100%); background: var(--bg); overflow-y: auto; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); }
+.detail-overlay.open .detail-panel { transform: translateX(0); }
+.detail-head { position: sticky; top: 0; background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; z-index: 10; }
+.detail-head-tag { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--teal); }
+.detail-close { width: 30px; height: 30px; border-radius: 50%; background: transparent; border: 1px solid var(--border); cursor: pointer; color: var(--muted); font-size: 1rem; line-height: 1; display: flex; align-items: center; justify-content: center; transition: background 0.1s; }
+.detail-close:hover { background: var(--border); color: var(--text); }
+.detail-body { padding: 40px 32px 60px; max-width: 620px; }
+.detail-body h2 { font-family: var(--ff-d); font-size: 1.5rem; font-weight: 600; line-height: 1.25; color: var(--text); text-wrap: balance; margin-bottom: 20px; }
+.detail-section { margin-bottom: 32px; }
+.detail-section h4 { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--subtle); margin-bottom: 10px; }
+.detail-section p { font-size: 0.9rem; color: var(--muted); line-height: 1.8; margin-bottom: 0.75em; }
+.detail-section p:last-child { margin-bottom: 0; }
+.detail-bullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.detail-bullets li { font-size: 0.875rem; color: var(--muted); line-height: 1.65; padding-left: 14px; position: relative; }
+.detail-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--subtle); }
+.detail-papers { display: flex; flex-direction: column; gap: 0; }
+.detail-paper { padding: 11px 0; border-bottom: 1px solid var(--border); }
+.detail-paper:first-child { border-top: 1px solid var(--border); }
+.detail-paper .pt { font-size: 0.8125rem; font-weight: 600; color: var(--text); line-height: 1.45; margin-bottom: 2px; }
+.detail-paper .pj { font-size: 0.75rem; font-style: italic; color: var(--navy); }
+.detail-content { display: none; }
+.detail-content.active { display: block; }
+
+/* NEWS */
+.news-list { display: flex; flex-direction: column; }
+.news-item { display: grid; grid-template-columns: 44px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+.news-item:first-child { border-top: 1px solid var(--border); }
+.news-yr { font-size: 0.75rem; font-weight: 500; color: var(--subtle); padding-top: 2px; font-variant-numeric: tabular-nums; }
+.news-body h4 { font-size: 0.9375rem; font-weight: 600; color: var(--text); line-height: 1.45; margin-bottom: 4px; }
+.news-body .bl { font-size: 0.8125rem; color: var(--muted); line-height: 1.65; margin-bottom: 7px; }
+.badge { display: inline-block; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 4px; }
+.bn { color: var(--navy); background: var(--navy-bg); }
+.bt { color: var(--teal); background: var(--teal-bg); }
+
+/* PEOPLE */
+.people-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+.person-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--rr); padding: 22px 14px 16px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; cursor: pointer; transition: background 0.15s, box-shadow 0.15s; }
+.person-card:hover { background: var(--surface2); box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+.avatar-wrap { position: relative; width: 80px; height: 80px; flex-shrink: 0; }
+.person-photo { position: absolute; inset: 0; width: 80px; height: 80px; border-radius: 50%; object-fit: cover; object-position: center top; z-index: 1; }
+.avatar { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--ff-d); font-size: 1.125rem; font-weight: 600; flex-shrink: 0; position: absolute; inset: 0; }
+.person-name { font-size: 0.875rem; font-weight: 600; color: var(--text); line-height: 1.35; }
+.person-role { font-size: 0.75rem; color: var(--muted); }
+.person-note { font-size: 0.6875rem; color: var(--subtle); line-height: 1.5; margin-top: 2px; }
+.people-sub { font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--subtle); margin: 32px 0 14px; }
+.alumni-grid { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--border); }
+.alumni-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+.alumni-name { font-size: 0.875rem; font-weight: 600; color: var(--text); }
+.alumni-role { font-size: 0.75rem; color: var(--muted); }
+.alumni-now { font-size: 0.75rem; color: var(--subtle); font-style: italic; text-align: right; }
+
+/* BANNERS */
+.site-banner { width: 100%; height: 260px; overflow: hidden; background: var(--surface2); display: flex; align-items: center; justify-content: center; position: relative; }
+.site-banner-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.site-banner-ph { font-size: 0.75rem; color: var(--subtle); letter-spacing: 0.06em; text-transform: uppercase; z-index: 1; pointer-events: none; }
+
+.detail-subd { font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--teal); margin: 32px 0 14px; padding-bottom: 6px; border-bottom: 1.5px solid var(--teal-bg); }
+
+/* DETAIL FIGURE */
+.detail-figure { margin-bottom: 28px; border-radius: calc(var(--rr) + 2px); overflow: hidden; position: relative; }
+.detail-figure img { width: 100%; height: auto; display: block; }
+.detail-figure figcaption { font-size: 0.75rem; color: var(--subtle); padding: 7px 4px 0; font-style: italic; line-height: 1.5; }
+.detail-figure-ph { min-height: 180px; background: var(--surface2); border: 1.5px dashed var(--border); border-radius: calc(var(--rr) + 2px); display: flex; align-items: center; justify-content: center; color: var(--subtle); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 28px; }
+
+/* PUBLICATIONS */
+.pub-year-group { margin-bottom: 36px; }
+.pub-year-group:last-child { margin-bottom: 0; }
+.pub-yr-head { font-family: var(--ff-d); font-size: 0.9375rem; font-weight: 600; color: var(--text); padding-bottom: 8px; border-bottom: 1.5px solid var(--navy); margin-bottom: 0; display: table; }
+.pub-list { list-style: none; }
+.pub-row { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--border); align-items: start; }
+.pub-row:last-child { border-bottom: none; }
+.pub-n { font-size: 0.6875rem; color: var(--subtle); font-variant-numeric: tabular-nums; text-align: right; padding-top: 3px; }
+.pub-t { font-size: 0.875rem; font-weight: 600; color: var(--text); line-height: 1.5; margin-bottom: 3px; }
+.pub-a { font-size: 0.8125rem; color: var(--muted); line-height: 1.55; margin-bottom: 3px; }
+.pub-a b { color: var(--text); }
+.pub-j { font-size: 0.8125rem; font-style: italic; color: var(--navy); }
+
+/* SOFTWARE */
+.sw-list { display: flex; flex-direction: column; }
+.sw-row { display: grid; grid-template-columns: 130px 1fr auto; gap: 16px 24px; padding: 16px 0; border-bottom: 1px solid var(--border); align-items: center; }
+.sw-row:first-child { border-top: 1px solid var(--border); }
+.sw-name { font-size: 0.9375rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; font-family: var(--ff-b); }
+.sw-desc { font-size: 0.8125rem; color: var(--muted); line-height: 1.6; }
+.sw-link { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+
+/* FOOTER */
+.footer-wrap { background: var(--surface); border-top: 1px solid var(--border); }
+.footer-inner { max-width: var(--w); margin: 0 auto; padding: 48px 2rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; }
+.footer-brand { font-family: var(--ff-d); font-size: 1.0625rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.footer-info { font-size: 0.875rem; color: var(--muted); line-height: 1.85; }
+.footer-info a { color: var(--teal); }
+.pill { display: inline-block; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; background: var(--teal); color: #fff; padding: 5px 14px; border-radius: 20px; }
+
+@media (max-width: 680px) {
+  .about-grid { grid-template-columns: 1fr; gap: 32px; }
+  .research-grid { grid-template-columns: 1fr; }
+  .sw-row { grid-template-columns: 1fr auto; }
+  .sw-name { grid-column: 1; }
+  .sw-desc { grid-column: 1 / -1; grid-row: 2; }
+  .sw-link { grid-column: 2; grid-row: 1; }
+  .nav-links { display: none; }
+  .hero-meta { gap: 24px; }
+  .footer-inner { flex-direction: column; }
+}
+</style>
+
+<nav>
+  <div class="nav-wrap">
+    <a href="#top" class="nav-brand"><img class="nav-logo" src="photos/lab-logo.png" alt="" onerror="this.style.display='none'">The He Lab</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#news">News</a>
+      <a href="#people">People</a>
+      <a href="#publications">Publications</a>
+      <a href="#software">Software</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <img class="hero-deco hero-deco-antibodies" src="photos/antibodies.png" alt="">
+  <img class="hero-deco hero-deco-parasites" src="photos/parasites.png" alt="">
+  <div class="eyebrow">Purdue University · Department of Biological Sciences</div>
+  <h1>Modeling and Simulation Methods for Genetics and Genomics in Infectious Diseases</h1>
+  <p class="hero-sub">The He Lab builds theoretical models and computational tools to understand how parasites diversify, adapt, and persist — integrating population genetics, disease ecology, structural biology and genomic evolution.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><div class="n">40+</div><div class="l">Publications</div></div>
+    <div class="hero-meta-item"><div class="n">1,000+</div><div class="l">Citations</div></div>
+    <div class="hero-meta-item"><div class="n">Infectious Diseases · Malaria · HDM</div><div class="l">Study Systems</div></div>
+    <div class="hero-meta-item"><div class="n">NIH · USDA · Simons</div><div class="l">Funded by</div></div>
+  </div>
+</header>
+
+<hr class="div">
+
+<section class="section" id="about">
+  <div class="lbl">Principal Investigator</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p><strong>Qixin He</strong> is the Mary J. Elmore New Frontiers Assistant Professor in the Department of Biological Sciences at Purdue University. She received her Ph.D. in Ecology and Evolutionary Biology from the University of Michigan (advisor: Prof. L. Lacey Knowles), and was a postdoctoral scholar at the University of Chicago with Prof. Mercedes Pascual.</p>
+      <p>Her lab focuses on understanding how evolution structures population diversity across space and time. By combining testable theoretical models with empirical genomic and ecological data, the group addresses fundamental questions about parasite-pathogen coevolution, rapid adaptation, and demographic histories, with a primary focus on <em>Plasmodium falciparum</em> malaria and host–mite systems.</p>
+    </div>
+    <div class="about-meta">
+      <div class="meta-row"><span class="meta-key">Position</span><span class="meta-val">Mary J. Elmore New Frontiers Assistant Professor</span></div>
+      <div class="meta-row"><span class="meta-key">Department</span><span class="meta-val">Biological Sciences, Purdue University</span></div>
+      <div class="meta-row"><span class="meta-key">Office</span><span class="meta-val">West Lafayette, IN 47907</span></div>
+      <div class="meta-row"><span class="meta-key">Email</span><span class="meta-val">heqixin(at)purdue(dot)edu</span></div>
+      <div class="meta-row"><span class="meta-key">Google Scholar</span><span class="meta-val"><a href="https://scholar.google.com/citations?user=WajKQtsAAAAJ" target="_blank">View profile ↗</a></span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<section class="section" id="research">
+  <div class="lbl">Research focus</div>
+  <div class="research-grid">
+    <div class="research-card" onclick="openPanel('falciparum')" role="button" tabindex="0" aria-label="Explore falciparum malaria research">
+      <span class="rtag">P. falciparum</span>
+      <h3>Antigenic diversity, strain structure &amp; drug resistance</h3>
+      <p>How does malaria maintain thousands of co-circulating strains — and why does drug resistance evolve so differently across transmission zones? Two interconnected questions, one eco-evolutionary framework.</p>
+      <span class="card-cta">Explore →</span>
+    </div>
+    <div class="research-card" onclick="openPanel('ecoevo')" role="button" tabindex="0" aria-label="Explore eco-evolutionary dynamics research">
+      <span class="rtag">Eco-evo theory</span>
+      <h3>Eco-evolutionary dynamics of strain diversity &amp; turnover</h3>
+      <p>A general framework linking within-host immunity and between-host transmission to predict how strain diversity accumulates and turns over — and what that means for long-term epidemic control.</p>
+      <span class="card-cta">Explore →</span>
+    </div>
+    <div class="research-card" onclick="openPanel('structural')" role="button" tabindex="0" aria-label="Explore structural population genetics research">
+      <span class="rtag">Structural genomics</span>
+      <h3>Population genetics meets protein structure</h3>
+      <p>Immune selection leaves readable signatures in genomic data that cluster around the very surfaces antibodies target. We decode those signals on protein structures to reveal what evolution tells us about immunity.</p>
+      <span class="card-cta">Explore →</span>
+    </div>
+    <div class="research-card" onclick="openPanel('mites')" role="button" tabindex="0" aria-label="Explore host-parasite research">
+      <span class="rtag">Host–parasite</span>
+      <h3>Host range expansion in mites &amp; symbionts</h3>
+      <p>Using global mammalian–acarine datasets and statistical models, we predict when parasites switch hosts and how transmission mode shapes host specificity and codiversification.</p>
+      <span class="card-cta">Explore →</span>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<section class="section" id="news">
+  <div class="lbl">Recent highlights</div>
+  <div class="news-list">
+    <div class="news-item">
+      <div class="news-yr">2026</div>
+      <div class="news-body">
+        <h4><a href="https://academic.oup.com/mbe/article-abstract/43/5/msag111/8665970" target="_blank" style="color:inherit;text-decoration:none;">evo3D: a spatial haplotype framework for structure-informed molecular evolution</a></h4>
+        <p class="bl">New R package from Broyles &amp; He maps evolutionary signals onto 3D protein structures for vaccine and antigen research.</p>
+        <span class="badge bn">Mol Biol Evol</span>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-yr">2025</div>
+      <div class="news-body">
+        <h4><a href="https://www.nature.com/articles/s41467-025-63655-0" target="_blank" style="color:inherit;text-decoration:none;">Rising dengue risk with increasing El Niño–Southern Oscillation amplitude</a></h4>
+        <p class="bl">Tian et al. show ENSO teleconnections are a major driver of dengue outbreak risk globally.</p>
+        <span class="badge bn">Nature Communications</span>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-yr">2024</div>
+      <div class="news-body">
+        <h4><a href="https://www.nature.com/articles/s41467-024-49515-3" target="_blank" style="color:inherit;text-decoration:none;">Predicting host range expansion in parasitic mites from global mammalian data</a></h4>
+        <p class="bl">Klimov &amp; He build the first global model of host switching in mites across 1,300+ mammal species.</p>
+        <span class="badge bn">Nature Communications</span>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-yr">2024</div>
+      <div class="news-body">
+        <h4><a href="https://doi.org/10.7554/eLife.90888" target="_blank" style="color:inherit;text-decoration:none;">Antigenic strain diversity predicts biogeographic patterns of drug resistance</a></h4>
+        <p class="bl">He, Chaillet &amp; Labbé explain why resistance to the same antimalarial rises and falls differently across transmission zones.</p>
+        <span class="badge bn">eLife</span>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-yr">2024</div>
+      <div class="news-body">
+        <h4><a href="https://www.nature.com/articles/s43856-024-00498-8" target="_blank" style="color:inherit;text-decoration:none;">Genomics reveals heterogeneous <em>P. falciparum</em> transmission in Zambia</a></h4>
+        <p class="bl">Fola, He et al. use population genomics to map malaria transmission heterogeneity across Zambia.</p>
+        <span class="badge bn">Communications Medicine</span>
+      </div>
+    </div>
+    <div class="news-item">
+      <div class="news-yr">2023</div>
+      <div class="news-body">
+        <h4><a href="https://www.pnas.org/doi/full/10.1073/pnas.2218499120" target="_blank" style="color:inherit;text-decoration:none;">An immune memory–structured SIS model for hyperdiverse pathogens</a></h4>
+        <p class="bl">de Roos, He &amp; Pascual develop a new epidemiological framework explaining chronic malaria exposure dynamics.</p>
+        <span class="badge bn">PNAS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<section class="section" id="people">
+  <div class="lbl">Lab members</div>
+  <div class="people-grid">
+
+    <div class="person-card" onclick="openBio('qixin')" role="button" tabindex="0" aria-label="Qixin He bio">
+      <div class="avatar-wrap">
+        <img class="person-photo" src="photos/qixin-he.jpg" alt="Qixin He" onerror="this.style.display='none'">
+        <div class="avatar" style="background:#0D3B6E;color:#BFD7FF;">QH</div>
+      </div>
+      <div class="person-name">Qixin He</div>
+      <div class="person-role">Principal Investigator</div>
+      <div class="person-note">Computational biology · eco-evolutionary dynamics</div>
+      <span class="card-cta" style="font-size:0.7rem;margin-top:2px;">Bio →</span>
+    </div>
+
+    <div class="person-card" onclick="openBio('jiawei')" role="button" tabindex="0" aria-label="Jiawei Liu bio">
+      <div class="avatar-wrap">
+        <img class="person-photo" src="photos/jiawei-liu.jpg" alt="Jiawei Liu" onerror="this.style.display='none'">
+        <div class="avatar" style="background:#064E3B;color:#86EFAC;">JL</div>
+      </div>
+      <div class="person-name">Jiawei Liu</div>
+      <div class="person-role">Postdoctoral Researcher</div>
+      <div class="person-note">Population genetics · disease ecology</div>
+      <span class="card-cta" style="font-size:0.7rem;margin-top:2px;">Bio →</span>
+    </div>
+
+    <div class="person-card" onclick="openBio('pavel')" role="button" tabindex="0" aria-label="Pavel Klimov bio">
+      <div class="avatar-wrap">
+        <img class="person-photo" src="photos/pavel-klimov.jpg" alt="Pavel Klimov" onerror="this.style.display='none'">
+        <div class="avatar" style="background:#064E3B;color:#86EFAC;">PK</div>
+      </div>
+      <div class="person-name">Pavel Klimov</div>
+      <div class="person-role">Postdoctoral Researcher</div>
+      <div class="person-note">Mite genomics · host specificity</div>
+      <span class="card-cta" style="font-size:0.7rem;margin-top:2px;">Bio →</span>
+    </div>
+
+    <div class="person-card" onclick="openBio('james')" role="button" tabindex="0" aria-label="James Myers-Hansen bio">
+      <div class="avatar-wrap">
+        <img class="person-photo" src="photos/james-myers-hansen.jpg" alt="James Myers-Hansen" onerror="this.style.display='none'">
+        <div class="avatar" style="background:#1E3A5F;color:#93C5FD;">JM</div>
+      </div>
+      <div class="person-name">James Myers-Hansen</div>
+      <div class="person-role">Graduate Student</div>
+      <div class="person-note">Malaria parasites · molecular tools</div>
+      <span class="card-cta" style="font-size:0.7rem;margin-top:2px;">Bio →</span>
+    </div>
+
+    <div class="person-card" onclick="openBio('brad')" role="button" tabindex="0" aria-label="Brad Broyles bio">
+      <div class="avatar-wrap">
+        <img class="person-photo" src="photos/brad-broyles.jpg" alt="Brad Broyles" onerror="this.style.display='none'">
+        <div class="avatar" style="background:#1E3A5F;color:#93C5FD;">BB</div>
+      </div>
+      <div class="person-name">Brad Broyles</div>
+      <div class="person-role">Graduate Student</div>
+      <div class="person-note">Protein evolution · malaria vaccines</div>
+      <span class="card-cta" style="font-size:0.7rem;margin-top:2px;">Bio →</span>
+    </div>
+
+    <div class="person-card" onclick="openBio('pradyut')" role="button" tabindex="0" aria-label="Pradyut Kumar bio">
+      <div class="avatar-wrap">
+        <img class="person-photo" src="photos/pradyut-kumar.jpg" alt="Pradyut Kumar" onerror="this.style.display='none'">
+        <div class="avatar" style="background:#1E3A5F;color:#93C5FD;">PK</div>
+      </div>
+      <div class="person-name">Pradyut Kumar</div>
+      <div class="person-role">Graduate Student</div>
+      <div class="person-note">Drug resistance modeling · spatial dynamics</div>
+      <span class="card-cta" style="font-size:0.7rem;margin-top:2px;">Bio →</span>
+    </div>
+
+  </div>
+
+  <div class="people-sub">Alumni</div>
+  <div class="alumni-grid">
+    <div class="alumni-row">
+      <div>
+        <div class="alumni-name">Jack Chaillet</div>
+        <div class="alumni-role">Graduate Student</div>
+      </div>
+      <div class="alumni-now">PhD student · Stony Brook University</div>
+    </div>
+    <div class="alumni-row">
+      <div>
+        <div class="alumni-name">Sarah Bennett</div>
+        <div class="alumni-role">Undergraduate Researcher</div>
+      </div>
+      <div class="alumni-now">MD student · Indiana University</div>
+    </div>
+    <div class="alumni-row">
+      <div>
+        <div class="alumni-name">Xinyi Zhou</div>
+        <div class="alumni-role">Undergraduate Researcher</div>
+      </div>
+      <div class="alumni-now">PhD student · University of Georgia</div>
+    </div>
+    <div class="alumni-row">
+      <div>
+        <div class="alumni-name">Luiz Pedroso</div>
+        <div class="alumni-role">Visiting Scholar</div>
+      </div>
+      <div class="alumni-now">Alumni</div>
+    </div>
+  </div>
+
+  <p style="font-size:0.8125rem;color:var(--subtle);margin-top:24px;"><strong style="color:var(--muted);">We are recruiting.</strong> Prospective graduate students and postdocs welcome — contact heqixin(at)purdue(dot)edu.</p>
+</section>
+
+<hr class="div">
+
+<section class="section" id="publications">
+  <div class="lbl">Publications</div>
+
+  <div class="pub-year-group">
+    <div class="pub-yr-head">2026</div>
+    <ul class="pub-list">
+      <li class="pub-row"><span class="pub-n">1</span><div><div class="pub-t"><a href="https://academic.oup.com/mbe/article-abstract/43/5/msag111/8665970" target="_blank" style="color:inherit">evo3D R package: a spatial haplotype framework for structure-informed analysis of molecular evolution</a></div><div class="pub-a">Broyles BK, <b>He Q</b>*</div><div class="pub-j">Molecular Biology and Evolution, 43(5)</div></div></li>
+    </ul>
+  </div>
+
+  <div class="pub-year-group">
+    <div class="pub-yr-head">2025</div>
+    <ul class="pub-list">
+      <li class="pub-row"><span class="pub-n">2</span><div><div class="pub-t"><a href="https://elifesciences.org/articles/91411" target="_blank" style="color:inherit">Measuring changes in <em>Plasmodium falciparum</em> census population size in response to sequential malaria control interventions</a></div><div class="pub-a">Tiedje KE, Zhan Q, Ruybal-Pésantez S, Tonkin-Hill G, <b>He Q</b>, Tan MH, et al.</div><div class="pub-j">eLife</div></div></li>
+      <li class="pub-row"><span class="pub-n">3</span><div><div class="pub-t"><a href="https://www.nature.com/articles/s41467-025-63655-0" target="_blank" style="color:inherit">Rising dengue risk with increasing El Niño–Southern Oscillation amplitude and teleconnections</a></div><div class="pub-a">Tian Y, Xu Y, Liang Y, Zhou Z, Susong KM, Chen Y, Joshi K, <b>He Q</b>, et al.</div><div class="pub-j">Nature Communications, 16:8629</div></div></li>
+      <li class="pub-row"><span class="pub-n">4</span><div><div class="pub-t"><a href="https://www.nature.com/articles/s41598-025-96115-2" target="_blank" style="color:inherit">The evolutionary history and timeline of mites in ancient soils</a></div><div class="pub-a">Klimov PB, Kolesnikov VB, Vorontsov DD, Ball AD, Bolton SJ, Mellish C, …, <b>He Q</b></div><div class="pub-j">Scientific Reports, 15:13555</div></div></li>
+      <li class="pub-row"><span class="pub-n">5</span><div><div class="pub-t"><a href="https://www.sciencedirect.com/science/article/pii/S1471492225001047" target="_blank" style="color:inherit">Var genes, strain hyperdiversity, and malaria transmission dynamics</a></div><div class="pub-a">Day KP, Tan MH, <b>He Q</b>, Ruybal-Pesántez S, Zhan Q, Tiedje KE, et al.</div><div class="pub-j">Trends in Parasitology, 41:471–485</div></div></li>
+      <li class="pub-row"><span class="pub-n">6</span><div><div class="pub-t">Learning mixed-infection strains from older hosts: a new sampling scheme for malaria epidemiology and population genetics</div><div class="pub-a">Liu J, Ding C, Ju N*, <b>He Q</b>* <span style="font-style:italic;color:var(--subtle);">[preprint]</span></div><div class="pub-j">medRxiv</div></div></li>
+      <li class="pub-row"><span class="pub-n">7</span><div><div class="pub-t"><a href="https://doi.org/10.1101/2025.08.08.669409" target="_blank" style="color:inherit">An eco-evolutionary framework to predict long-term strain diversity and turnover in infectious diseases</a></div><div class="pub-a">Liu J, <b>He Q</b>* <span style="font-style:italic;color:var(--subtle);">[preprint]</span></div><div class="pub-j">bioRxiv</div></div></li>
+      <li class="pub-row"><span class="pub-n">8</span><div><div class="pub-t">Evolutionary trade-offs between functional and immune selection shape multigene families in pathogens</div><div class="pub-a">Zhan Q, Pascual M, <b>He Q</b>* <span style="font-style:italic;color:var(--subtle);">[preprint]</span></div><div class="pub-j">bioRxiv</div></div></li>
+    </ul>
+  </div>
+
+  <div class="pub-year-group">
+    <div class="pub-yr-head">2024</div>
+    <ul class="pub-list">
+      <li class="pub-row"><span class="pub-n">9</span><div><div class="pub-t"><a href="https://www.nature.com/articles/s41467-024-49515-3" target="_blank" style="color:inherit">Predicting host range expansion in parasitic mites using a global mammalian–acarine dataset</a></div><div class="pub-a">Klimov PB*, <b>He Q</b>*</div><div class="pub-j">Nature Communications, 15:5431</div></div></li>
+      <li class="pub-row"><span class="pub-n">10</span><div><div class="pub-t"><a href="https://doi.org/10.7554/eLife.90888" target="_blank" style="color:inherit">Antigenic strain diversity predicts different biogeographic patterns of maintenance and decline of antimalarial drug resistance</a></div><div class="pub-a"><b>He Q</b>*, Chaillet JK, Labbé F</div><div class="pub-j">eLife, 12:RP90888</div></div></li>
+      <li class="pub-row"><span class="pub-n">11</span><div><div class="pub-t"><a href="https://www.nature.com/articles/s41467-024-51468-6" target="_blank" style="color:inherit">Hyper-diverse antigenic variation and resilience to transmission-reducing intervention in falciparum malaria</a></div><div class="pub-a">Zhan Q, <b>He Q</b>, Tiedje K, Day KP, Pascual M</div><div class="pub-j">Nature Communications, 15:7343</div></div></li>
+      <li class="pub-row"><span class="pub-n">12</span><div><div class="pub-t"><a href="https://www.nature.com/articles/s43856-024-00498-8" target="_blank" style="color:inherit">Genomics reveals heterogeneous <em>Plasmodium falciparum</em> transmission and selection signals in Zambia</a></div><div class="pub-a">Fola AA*, <b>He Q</b>*, Xie S, Thimmapuram J, Bhide KP, Dorman J, et al.</div><div class="pub-j">Communications Medicine, 4:67</div></div></li>
+      <li class="pub-row"><span class="pub-n">13</span><div><div class="pub-t"><a href="https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(24)00262-7/fulltext" target="_blank" style="color:inherit">Diversity and selection analyses identify transmission-blocking antigens as optimal vaccine candidates in <em>Plasmodium falciparum</em></a></div><div class="pub-a">Ciubotariu II, Broyles BK, Xie S, Thimmapuram J, Mwenda MC, …, <b>He Q</b>*, Carpi G*</div><div class="pub-j">eBioMedicine, 106:105227</div></div></li>
+      <li class="pub-row"><span class="pub-n">14</span><div><div class="pub-t"><a href="https://doi.org/10.1093/bioinformatics/btae344" target="_blank" style="color:inherit">SNP-slice resolves mixed infections: simultaneously unveiling strain haplotypes and linking them to hosts</a></div><div class="pub-a">Ju N*, Liu J, <b>He Q</b>*</div><div class="pub-j">Bioinformatics, 40:btae344</div></div></li>
+    </ul>
+  </div>
+
+  <div class="pub-year-group">
+    <div class="pub-yr-head">2023</div>
+    <ul class="pub-list">
+      <li class="pub-row"><span class="pub-n">15</span><div><div class="pub-t"><a href="https://www.pnas.org/doi/full/10.1073/pnas.2218499120" target="_blank" style="color:inherit">An immune memory–structured SIS epidemiological model for hyperdiverse pathogens</a></div><div class="pub-a">de Roos AM, <b>He Q</b>, Pascual M</div><div class="pub-j">PNAS, 120:e2218499120</div></div></li>
+      <li class="pub-row"><span class="pub-n">16</span><div><div class="pub-t"><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010816" target="_blank" style="color:inherit">Neutral vs. non-neutral genetic footprints of <em>Plasmodium falciparum</em> multiclonal infections</a></div><div class="pub-a">Labbé F, <b>He Q</b>, Zhan Q, Tiedje KE, Argyropoulos DC, Tan MH, et al.</div><div class="pub-j">PLOS Computational Biology, 19:e1010816</div></div></li>
+      <li class="pub-row"><span class="pub-n">17</span><div><div class="pub-t"><a href="https://www.nature.com/articles/s42003-023-05535-1" target="_blank" style="color:inherit">Horizontal transmission maintains host specificity and codiversification of symbionts in a brood parasitic host</a></div><div class="pub-a">Pedroso LGA, Klimov PB, Mironov SV, OConnor BM, Braig HR, Pepato AR, Johnson K, <b>He Q</b>*</div><div class="pub-j">Communications Biology, 6:1–12</div></div></li>
+      <li class="pub-row"><span class="pub-n">18</span><div><div class="pub-t">Frequent presence of major dust mite allergens in human digestive tissues of children with gastritis</div><div class="pub-a">Zhou Y, Yang S, Lin Q, <b>He Q</b>*, Cui Y*</div><div class="pub-j">Allergy, 78:590–592</div></div></li>
+      <li class="pub-row"><span class="pub-n">19</span><div><div class="pub-t">Predicting <em>Blomia tropicalis</em> allergens using a multiomics approach</div><div class="pub-a">Hubert J, Vrtala S, Sopko B, Dowd SE, <b>He Q</b>, Klimov PB, et al.</div><div class="pub-j">Clinical and Translational Allergy, 13:e12302</div></div></li>
+    </ul>
+  </div>
+
+  <div class="pub-year-group">
+    <div class="pub-yr-head">2022</div>
+    <ul class="pub-list">
+      <li class="pub-row"><span class="pub-n">20</span><div><div class="pub-t">The relationship between rising temperatures and malaria incidence in Hainan, China, 1984–2010</div><div class="pub-a">Wang Z, Liu Y, Li Y, Wang G, Lourenço J, Kraemer M, <b>He Q</b>, Cazelles B, et al.</div><div class="pub-j">The Lancet Planetary Health, 6:e350–e358</div></div></li>
+      <li class="pub-row"><span class="pub-n">21</span><div><div class="pub-t">Age-specific patterns of DBLα var diversity explain persistent susceptibility to <em>P. falciparum</em> blood-stage infection throughout life</div><div class="pub-a">Ruybal-Pesántez S, Tiedje KE, Pilosof S, Tonkin-Hill G, <b>He Q</b>, Rask TS, et al.</div><div class="pub-j">International Journal for Parasitology, 52:721–731</div></div></li>
+      <li class="pub-row"><span class="pub-n">22</span><div><div class="pub-t">Vertical transmission and seasonal dimorphism of eriophyoid mites parasitic on the Norway maple</div><div class="pub-a">Chetverikov PE, Klimov PB, <b>He Q</b></div><div class="pub-j">Royal Society Open Science, 9:220820</div></div></li>
+    </ul>
+  </div>
+
+  <div class="pub-year-group">
+    <div class="pub-yr-head">2021</div>
+    <ul class="pub-list">
+      <li class="pub-row"><span class="pub-n">23</span><div><div class="pub-t">Quantifying asymptomatic infection and transmission of COVID-19 in New York City using observed cases, serology, and testing capacity</div><div class="pub-a">Subramanian R, <b>He Q</b>, Pascual M</div><div class="pub-j">PNAS, 118:e2019716118</div></div></li>
+      <li class="pub-row"><span class="pub-n">24</span><div><div class="pub-t"><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008729" target="_blank" style="color:inherit">An antigenic diversification threshold for falciparum malaria transmission at high endemicity</a></div><div class="pub-a"><b>He Q</b>, Pascual M</div><div class="pub-j">PLOS Computational Biology, 17:e1008729</div></div></li>
+      <li class="pub-row"><span class="pub-n">25</span><div><div class="pub-t">Frequency-dependent competition between strains imparts persistence to perturbations in a model of <em>P. falciparum</em> malaria transmission</div><div class="pub-a"><b>He Q</b>, Pilosof S, Tiedje KE, Day KP, Pascual M</div><div class="pub-j">Frontiers in Ecology and Evolution, 9:633263</div></div></li>
+    </ul>
+  </div>
+
+  <p style="font-size:0.8125rem;color:var(--subtle);margin-top:8px;">* indicates corresponding author. Earlier publications and full list on <a href="https://scholar.google.com/citations?user=WajKQtsAAAAJ" target="_blank">Google Scholar</a>.</p>
+</section>
+
+<hr class="div">
+
+<section class="section" id="software">
+  <div class="lbl">Software &amp; tools</div>
+  <div class="sw-list">
+    <div class="sw-row">
+      <div class="sw-name">evo3D</div>
+      <div class="sw-desc">Spatial haplotype framework for structure-informed analysis of molecular evolution in R. Broyles &amp; He (2026) <em>Mol Biol Evol</em></div>
+      <a class="sw-link" href="https://github.com/bbroyle/evo3D" target="_blank">GitHub ↗</a>
+    </div>
+    <div class="sw-row">
+      <div class="sw-name">SNP-slice</div>
+      <div class="sw-desc">Resolves mixed infections by simultaneously inferring strain haplotypes and linking them to individual hosts. Ju, Liu &amp; He (2024) <em>Bioinformatics</em></div>
+      <a class="sw-link" href="https://github.com/nianqiaoju/snp-slice" target="_blank">GitHub ↗</a>
+    </div>
+    <div class="sw-row">
+      <div class="sw-name">DrugResist</div>
+      <div class="sw-desc">Drug resistance simulator for malaria, modeling biogeographic patterns of resistance evolution under varying transmission intensity. He, Chaillet &amp; Labbé (2024) <em>eLife</em></div>
+      <a class="sw-link" href="https://github.itap.purdue.edu/HeLab/MalariaResistance" target="_blank">GitHub ↗</a>
+    </div>
+    <div class="sw-row">
+      <div class="sw-name">varmodel2</div>
+      <div class="sw-desc">Agent-based malaria transmission model capturing strain structure through <em>var</em> gene antigenic diversity. He et al. (2018) <em>Nature Communications</em></div>
+      <a class="sw-link" href="https://github.com/pascualgroup/varmodel2" target="_blank">GitHub ↗</a>
+    </div>
+    <div class="sw-row">
+      <div class="sw-name">X-ORIGIN</div>
+      <div class="sw-desc">Infers latitudinal and longitudinal coordinates of range expansion origins from population genomic data in an ABC framework. He, Prado &amp; Knowles (2017) <em>Mol Ecol</em></div>
+      <a class="sw-link" href="https://github.com/KnowlesLab/X-ORGIN" target="_blank">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- BIO PANEL OVERLAY -->
+<div class="detail-overlay" id="bioOverlay" role="dialog" aria-modal="true" aria-label="Member bio">
+  <div class="detail-panel" id="bioPanel">
+    <div class="detail-head">
+      <span class="detail-head-tag" id="bioTag"></span>
+      <button class="detail-close" onclick="closeBio()" aria-label="Close">✕</button>
+    </div>
+    <div class="detail-body">
+
+      <!-- QIXIN HE -->
+      <div class="detail-content" id="bio-qixin">
+        <div class="bio-av-wrap"><img class="bio-av-photo" src="photos/qixin-he.jpg" alt="Qixin He" onerror="this.style.display='none'"><div class="bio-av-init" style="background:#0D3B6E;color:#BFD7FF;">QH</div></div>
+        <h2>Qixin He</h2>
+        <div class="detail-section">
+          <h4>Role</h4>
+          <p>Principal Investigator · Assistant Professor, Department of Biological Sciences, Purdue University</p>
+        </div>
+        <div class="detail-section">
+          <h4>Bio</h4>
+          <p>Evolution is the logical backbone of any biological phenomenon. Since the modern synthesis, many quantitative evolutionary models (especially in the field of population genetics) have been developed to decipher the mode, tempo, and impact of evolution on the diversification of populations, species, and communities. These models have been successful and sufficient until recently, with the explosion of genomic data. The advent of a vast amount of genomic resources not only grants us the luxury of asking new questions but also, at the same time, requires new models, new tests, and new statistical tools to understand the complexity of nature.</p>
+          <p>I am particularly passionate about building theoretical models and applying them empirically to understand the evolution and structuring of population diversities in time and space. I integrate concepts and tools from population genetics, genomic evolution, and disease ecology, and develop new methodologies to answer questions regarding rapid adaptation, range expansions and contractions, and parasite-pathogen coevolution.</p>
+        </div>
+      </div>
+
+      <!-- JIAWEI LIU -->
+      <div class="detail-content" id="bio-jiawei">
+        <div class="bio-av-wrap"><img class="bio-av-photo" src="photos/jiawei-liu.jpg" alt="Jiawei Liu" onerror="this.style.display='none'"><div class="bio-av-init" style="background:#0D4E5C;color:#B6E8F0;">JL</div></div>
+        <h2>Jiawei Liu</h2>
+        <div class="detail-section">
+          <h4>Role</h4>
+          <p>Postdoctoral Researcher</p>
+        </div>
+        <div class="detail-section">
+          <h4>Bio</h4>
+          <p>In my previous research, I used disease ecology models to study the effects of climate change on the interactions between a forest pest and its specific pathogens. I am interested in applying population genetics and statistical approaches to disease ecology, to explore how the evolutionary processes and pathogen diversity could affect disease control and prevention. Here I will study the Malaria system, which is famous for antigenic diversity. In my spare time, I like playing tennis and watching sports matches.</p>
+        </div>
+      </div>
+
+      <!-- PAVEL KLIMOV -->
+      <div class="detail-content" id="bio-pavel">
+        <div class="bio-av-wrap"><img class="bio-av-photo" src="photos/pavel-klimov.jpg" alt="Pavel Klimov" onerror="this.style.display='none'"><div class="bio-av-init" style="background:#3B2F0D;color:#F5DFA0;">PK</div></div>
+        <h2>Pavel Klimov</h2>
+        <div class="detail-section">
+          <h4>Role</h4>
+          <p>Postdoctoral Researcher</p>
+        </div>
+        <div class="detail-section">
+          <h4>Bio</h4>
+          <p>I study genomics and allergenic properties of house dust mites, and the many fascinating ways they interact with the environment, humans, and other organisms. At Purdue, we will conduct a global survey of wild house dust mites, create a probabilistic model of mite invasion to human houses from wild habitats following climate change, and predict their allergenic propensities based on conservatism/variability of known IgE epitopes. We will also explore the possibility of creating a universal vaccine treating mite-induced allergic disorders using a murine model.</p>
+        </div>
+      </div>
+
+      <!-- JAMES MYERS-HANSEN -->
+      <div class="detail-content" id="bio-james">
+        <div class="bio-av-wrap"><img class="bio-av-photo" src="photos/james-myers-hansen.jpg" alt="James Myers-Hansen" onerror="this.style.display='none'"><div class="bio-av-init" style="background:#1A3B1A;color:#B6F0B6;">JM</div></div>
+        <h2>James Myers-Hansen</h2>
+        <div class="detail-section">
+          <h4>Role</h4>
+          <p>Graduate Student</p>
+        </div>
+        <div class="detail-section">
+          <h4>Bio</h4>
+          <p>My interest is generally in infectious disease research. I am particularly interested in the use of molecular and genomic tools for the spatial and temporal tracking of malaria parasites and vectors in order to gain insight into transmission changes, and the spread of drug and insecticide resistance as control interventions are applied. I love cooking and playing soccer outside my working hours.</p>
+        </div>
+      </div>
+
+      <!-- BRAD BROYLES -->
+      <div class="detail-content" id="bio-brad">
+        <div class="bio-av-wrap"><img class="bio-av-photo" src="photos/brad-broyles.jpg" alt="Brad Broyles" onerror="this.style.display='none'"><div class="bio-av-init" style="background:#3B0D3B;color:#F0B6F0;">BB</div></div>
+        <h2>Brad Broyles</h2>
+        <div class="detail-section">
+          <h4>Role</h4>
+          <p>Graduate Student</p>
+        </div>
+        <div class="detail-section">
+          <h4>Bio</h4>
+          <p>I am interested in antibody-antigen interactions and how this shapes pathogen protein diversity. Recently, I have worked on malaria and house dust mite projects mapping diversity statistics to protein surfaces in pursuit of promising vaccine leads. Both antibody diversity and antigen diversity represent combinatorially large spaces which can not be experimentally exhausted, so I am interested in machine learning models that extend our knowledge of immunodominant regions and epitope cross-reactivity. Last, I would like to build R and Python packages that capture my workflows to share with other research teams. If I am not in lab, I am home playing guitar.</p>
+        </div>
+      </div>
+
+      <!-- PRADYUT KUMAR -->
+      <div class="detail-content" id="bio-pradyut">
+        <div class="bio-av-wrap"><img class="bio-av-photo" src="photos/pradyut-kumar.jpg" alt="Pradyut Kumar" onerror="this.style.display='none'"><div class="bio-av-init" style="background:#0D2B3B;color:#A0D4F5;">PK</div></div>
+        <h2>Pradyut Kumar</h2>
+        <div class="detail-section">
+          <h4>Role</h4>
+          <p>Graduate Student</p>
+        </div>
+        <div class="detail-section">
+          <h4>Bio</h4>
+          <p>I am broadly interested in using mathematical models to understand biological processes, particularly infectious disease dynamics. My current work focuses on malaria and the ecological and evolutionary factors that shape the establishment and persistence of drug resistance. Before coming to Purdue, I completed an integrated dual degree at BITS Pilani, India, earning a B.E. in Electronics and Instrumentation and an M.Sc. in Biological Sciences. Outside the lab, I enjoy desi hip-hop, trivia quizzes, sketching, badminton, and spending probably too much time deconstructing rap lyrics and constructing bad puns.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const bioOverlay = document.getElementById('bioOverlay');
+const bioTag = document.getElementById('bioTag');
+const bioLabels = { qixin: 'PI', jiawei: 'Postdoc', pavel: 'Postdoc', james: 'Grad student', brad: 'Grad student', pradyut: 'Grad student' };
+
+function openBio(id) {
+  document.querySelectorAll('#bioOverlay .detail-content').forEach(el => el.classList.remove('active'));
+  const target = document.getElementById('bio-' + id);
+  if (target) target.classList.add('active');
+  bioTag.textContent = bioLabels[id] || '';
+  bioOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('bioPanel').scrollTop = 0;
+}
+
+function closeBio() {
+  bioOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+bioOverlay.addEventListener('click', function(e) {
+  if (e.target === bioOverlay) closeBio();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeBio(); closePanel(); }
+});
+
+document.querySelectorAll('.person-card').forEach(card => {
+  card.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+  });
+});
+</script>
+
+<!-- DETAIL PANEL OVERLAY -->
+<div class="detail-overlay" id="detailOverlay" role="dialog" aria-modal="true" aria-label="Research detail">
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-head">
+      <span class="detail-head-tag" id="detailTag"></span>
+      <button class="detail-close" onclick="closePanel()" aria-label="Close">✕</button>
+    </div>
+    <div class="detail-body">
+
+      <!-- P. FALCIPARUM: ANTIGENIC DIVERSITY + DRUG RESISTANCE -->
+      <div class="detail-content" id="dc-falciparum">
+        <h2>Antigenic diversity, strain structure &amp; drug resistance in <em>Plasmodium falciparum</em></h2>
+        <figure class="detail-figure" id="fig-falciparum-wrap">
+          <img src="photos/fig-falciparum.png" alt="P. falciparum figure" onerror="this.parentElement.style.display='none';document.getElementById('fig-falciparum-ph').style.display='flex'">
+        </figure>
+        <div class="detail-figure-ph" id="fig-falciparum-ph" style="display:none">Add photos/fig-falciparum.png</div>
+
+        <div class="detail-subd">Sub-direction 1 — Antigenic diversity &amp; immune selection</div>
+        <div class="detail-section">
+          <h4>Overview</h4>
+          <p><em>Plasmodium falciparum</em> encodes a massive family of antigenically variable surface proteins (PfEMP1, encoded by <em>var</em> genes) that enable immune evasion. A single parasite genome carries ~60 <em>var</em> genes; across the parasite population, thousands of distinct antigenic variants coexist in a complex strain structure maintained by immune selection.</p>
+          <p>This diversity underlies the chronic nature of malaria in high-transmission settings — hosts accumulate immunity to individual strains but remain susceptible to novel ones for years. It also drives rapid rebound: the parasite population can maintain its antigenic repertoire despite temporarily reduced prevalence under intervention, causing fast resurgence when interventions are stopped.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Key questions</h4>
+          <ul class="detail-bullets">
+            <li>What is the interaction between transmission intensity and immunological forces that shapes thousands of co-circulating strains?</li>
+            <li>How do we infer SNP-haplotypes from mixed infections?</li>
+            <li>What is the spatiotemporal structure of parasite genomes, and how do we infer the strength of immune selection?</li>
+            <li>How does this information translate into actionable intervention schemes?</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>Our approach</h4>
+          <ul class="detail-bullets">
+            <li>Agent-based and mathematical models of <em>var</em> gene competition, immune memory, and cross-reactivity</li>
+            <li>Theoretical models to investigate transmission patterns and required intervention efforts</li>
+            <li>Network analyses of genetic similarity to map strain structure and infer the strength of immune selection</li>
+            <li>Threshold theory: R<sub>div</sub>, an antigenic innovation number analogous to R<sub>0</sub>, predicts when interventions collapse strain diversity to enable elimination</li>
+            <li>Longitudinal genomic surveillance data from high-transmission sites in Ghana &amp; Zambia</li>
+            <li>Statistical tools to resolve haplotypes from mixed infections</li>
+          </ul>
+        </div>
+
+        <div class="detail-subd">Sub-direction 2 — Biogeography of drug resistance</div>
+        <div class="detail-section">
+          <h4>Overview</h4>
+          <p>Antimalarial drug resistance follows striking geographic patterns that simple population genetic models fail to explain. Chloroquine resistance emerged independently in Southeast Asia and South America before sweeping through Africa, and resistance to different drug combinations rises and falls differently across transmission zones — a pattern that standard resistance models, which ignore immune selection, cannot capture.</p>
+          <p>Our work shows that the same antigenic diversity shaping malaria's epidemiology also governs drug resistance evolution: in high-transmission regions, intense immune selection favors parasite diversification over resistance; in low-transmission zones, immunity is weaker and resistant strains spread with less competitive pressure.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Key questions</h4>
+          <ul class="detail-bullets">
+            <li>How do transmission intensity and immune selection modulate drug-resistance evolution?</li>
+            <li>What are the impacts of recombination and the number of affecting alleles?</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>Our approach</h4>
+          <ul class="detail-bullets">
+            <li>Compartmental models coupling antigenic diversification with drug resistance dynamics</li>
+            <li>Calibration to field resistance surveillance data from sub-Saharan Africa and Southeast Asia</li>
+            <li>Prediction of which drug combinations will succeed or fail under different transmission regimes</li>
+            <li>Population genomic analysis of selection signals in parasite genomes from Zambia and elsewhere</li>
+          </ul>
+        </div>
+
+        <div class="detail-section">
+          <h4>Selected publications</h4>
+          <div class="detail-papers">
+            <div class="detail-paper"><div class="pt"><a href="https://www.nature.com/articles/s41467-018-04219-3" target="_blank" style="color:inherit">Networks of genetic similarity reveal non-neutral processes shape strain structure in <em>P. falciparum</em></a></div><div class="pj">He Q et al. — Nature Communications, 2018</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008729" target="_blank" style="color:inherit">An antigenic diversification threshold for falciparum malaria transmission at high endemicity</a></div><div class="pj">He Q, Pascual M — PLOS Computational Biology, 2021</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://www.nature.com/articles/s41467-024-51468-6" target="_blank" style="color:inherit">Hyper-diverse antigenic variation and resilience to transmission-reducing intervention in falciparum malaria</a></div><div class="pj">Zhan Q, He Q et al. — Nature Communications, 2024</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://elifesciences.org/articles/91411" target="_blank" style="color:inherit">Measuring changes in <em>P. falciparum</em> census population size in response to sequential malaria control interventions</a></div><div class="pj">Tiedje KE, He Q et al. — eLife, 2025</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://doi.org/10.7554/eLife.90888" target="_blank" style="color:inherit">Antigenic strain diversity predicts different biogeographic patterns of maintenance and decline of antimalarial drug resistance</a></div><div class="pj">He Q*, Chaillet JK, Labbé F — eLife, 2024</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://www.nature.com/articles/s43856-024-00498-8" target="_blank" style="color:inherit">Genomics reveals heterogeneous <em>P. falciparum</em> transmission and selection signals in Zambia</a></div><div class="pj">Fola AA*, He Q* et al. — Communications Medicine, 2024</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(24)00262-7/fulltext" target="_blank" style="color:inherit">Diversity and selection analyses identify transmission-blocking antigens as optimal vaccine candidates in <em>P. falciparum</em></a></div><div class="pj">Ciubotariu II, Broyles BK, He Q* et al. — eBioMedicine, 2024</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010816" target="_blank" style="color:inherit">Neutral vs. non-neutral genetic footprints of <em>P. falciparum</em> multiclonal infections</a></div><div class="pj">Labbé F, He Q et al. — PLOS Computational Biology, 2023</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://doi.org/10.1093/bioinformatics/btae344" target="_blank" style="color:inherit">SNP-slice resolves mixed infections: simultaneously unveiling strain haplotypes and linking them to hosts</a></div><div class="pj">Ju N*, Liu J, He Q* — Bioinformatics, 2024</div></div>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h4>Software</h4>
+          <ul class="detail-bullets">
+            <li><strong>varmodel2</strong> — agent-based malaria transmission model (<a href="https://github.com/pascualgroup/varmodel2" target="_blank">GitHub</a>)</li>
+            <li><strong>DrugResist</strong> — drug resistance simulator (<a href="https://github.itap.purdue.edu/HeLab/MalariaResistance" target="_blank">GitHub</a>)</li>
+            <li><strong>SNP-slice</strong> — haplotype inference from mixed infections (<a href="https://github.com/nianqiaoju/snp-slice" target="_blank">GitHub</a>)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ECO-EVO DYNAMICS -->
+      <div class="detail-content" id="dc-ecoevo">
+        <h2>Eco-evolutionary dynamics of strain diversity &amp; turnover</h2>
+        <figure class="detail-figure" id="fig-ecoevo-wrap">
+          <img src="photos/fig-ecoevo.png" alt="Eco-evo dynamics figure" onerror="this.parentElement.style.display='none';document.getElementById('fig-ecoevo-ph').style.display='flex'">
+        </figure>
+        <div class="detail-figure-ph" id="fig-ecoevo-ph" style="display:none">Add photos/fig-ecoevo.png</div>
+        <div class="detail-section">
+          <h4>Overview</h4>
+          <p>What determines how many pathogen strains co-circulate at equilibrium — and at what rate are they replaced by new variants? These questions are central to predicting epidemic dynamics, evaluating the long-term impact of interventions, and understanding pathogen evolution. Most existing models treat population ecology and evolutionary genetics separately; when coupled, qualitatively new behaviors emerge that neither framework alone predicts.</p>
+          <p>We develop a general eco-evolutionary framework that integrates within-host immune dynamics with between-host transmission and strain-level evolutionary processes to predict long-term strain diversity and its turnover rate. Unlike disease-specific models, this framework is designed to apply across pathogens with diverse life histories and antigenic architectures and infer the dominant forces of maintaining or disrupting strain diversity.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Key questions</h4>
+          <ul class="detail-bullets">
+            <li>What ecological and evolutionary forces jointly determine the equilibrium number of co-circulating strains?</li>
+            <li>How does strain turnover — the rate at which variants are replaced — depend on transmission intensity and selection strength?</li>
+            <li>How does this framework translate into predictions about epidemic rebounds and long-term intervention failure?</li>
+            <li>Are there general mechanisms that explain the observed diversity and turnover patterns across pathogens?</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>Our approach</h4>
+          <ul class="detail-bullets">
+            <li>Analytical and computational eco-evolutionary models coupling immune dynamics with strain emergence and extinction</li>
+            <li>Derivation of diversity-turnover relationships spanning a spectrum of pathogen life histories</li>
+            <li>Application to several human diseases, such as influenza A, HIV-1, malaria and pneumococcus as primary test cases, with broader generalization to other multi-strain pathogens</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>Selected publications</h4>
+          <div class="detail-papers">
+            <div class="detail-paper"><div class="pt"><a href="https://doi.org/10.1101/2025.08.08.669409" target="_blank" style="color:inherit">An eco-evolutionary framework to predict long-term strain diversity and turnover in infectious diseases</a></div><div class="pj">Liu J, He Q* — bioRxiv, 2025</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRUCTURAL POPULATION GENETICS -->
+      <div class="detail-content" id="dc-structural">
+        <h2>Population genetics meets protein structure</h2>
+        <figure class="detail-figure" id="fig-structural-wrap">
+          <img src="photos/fig-structural.png" alt="Structural genomics figure" onerror="this.parentElement.style.display='none';document.getElementById('fig-structural-ph').style.display='flex'">
+        </figure>
+        <div class="detail-figure-ph" id="fig-structural-ph" style="display:none">Add photos/fig-structural.png</div>
+        <div class="detail-section">
+          <h4>Overview</h4>
+          <p>The same immune pressure that drives pathogen evolution leaves different signatures in genomic data at the 2D and 3D levels. Our lab bridges population genetic theory and structural biology to decode these signals, revealing new insights of genetics signature from three-dimensional protein architecture that can be learned.</p>
+          <p>Our first relevant work published is <strong>evo3D</strong>, an R package that maps haplotype-level statistics (such as diversity, selection, differentiation) onto protein structure surfaces. By mapping evolutionary history from sequence data onto protein surfaces, we can identify which regions of a pathogen protein are most intensely targeted by different types of selection forces.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Ongoing applications</h4>
+          <p>Current approaches to identifying antibody epitopes are constrained by the scarcity of experimentally solved antibody-antigen structures, which are expensive to obtain and often biased toward a narrow range of antigens. Evolutionary signals offer a principled, scalable alternative grounded in the collective immune history of host populations — applicable anywhere sequence and structural data exist.</p>
+          <p>We are building on the evo3D foundation to develop systematic tools that span a broad range of human pathogens, integrating evolutionary genomics with structural feature analysis to expand what can be learned about immunodominance and vaccine targets at scale. Ongoing work, supported by NIH, is pushing this framework toward new predictive applications in antigen biology.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Research directions</h4>
+          <ul class="detail-bullets">
+            <li>Projecting population genetic statistics onto 3D protein surfaces to map immune selection in structural space</li>
+            <li>Building comprehensive immune selection profiles across diverse antigen families from sequence and structural databases</li>
+            <li>Applications to malaria surface antigens, respiratory viruses, and other pathogens of public health relevance</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>Selected publications</h4>
+          <div class="detail-papers">
+            <div class="detail-paper"><div class="pt"><a href="https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(24)00262-7/fulltext" target="_blank" style="color:inherit">Diversity and selection analyses identify transmission-blocking antigens as optimal vaccine candidates in <em>P. falciparum</em></a></div><div class="pj">Ciubotariu II, Broyles BK, He Q* et al. — eBioMedicine, 2024</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://academic.oup.com/mbe/article-abstract/43/5/msag111/8665970" target="_blank" style="color:inherit">evo3D R package: a spatial haplotype framework for structure-informed analysis of molecular evolution</a></div><div class="pj">Broyles BK, He Q* — Molecular Biology and Evolution, 2026</div></div>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h4>Software</h4>
+          <ul class="detail-bullets">
+            <li><strong>evo3D</strong> — maps evolutionary signals onto 3D protein structures (<a href="https://github.com/bbroyle/evo3D" target="_blank">GitHub</a>)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- HOST–PARASITE: MITES -->
+      <div class="detail-content" id="dc-mites">
+        <h2>Host–parasite vs. free-living — Mites &amp; symbionts</h2>
+        <figure class="detail-figure" id="fig-mites-wrap">
+          <img src="photos/fig-mites.jpg" alt="Host–parasite figure" onerror="this.parentElement.style.display='none';document.getElementById('fig-mites-ph').style.display='flex'">
+        </figure>
+        <div class="detail-figure-ph" id="fig-mites-ph" style="display:none">Add photos/fig-mites.jpg</div>
+        <div class="detail-section">
+          <h4>Overview</h4>
+          <p>Mites (Acari) are the most diverse arthropod group on Earth, with over 55,000 described species associated with virtually every terrestrial organism, including parasites on mammals, birds, plants, insects (such as bees) and free-living organisms in nests, houses and soil. Their host associations provide a rich natural experiment in how parasites colonize new hosts, diversify with them, and respond to environmental change. Soil mites provide important ecological services to terrestrial ecosystems by shredding organic materials and making it available for bacterial and fungal decomposition.</p>
+          <p>Our lab studies the evolutionary ecology of host–mite interactions across multiple scales: from the molecular biology of allergens in dust mites, to macroecological patterns of host switching across 1,300+ mammal species, to the deep evolutionary history of mites across geological time.</p>
+        </div>
+        <div class="detail-section">
+          <h4>Current projects</h4>
+          <ul class="detail-bullets">
+            <li><strong>Global host-switching prediction:</strong> Using machine learning and a database of 10,000+ mammal–mite associations, we model the ecological and phylogenetic predictors of host range expansion and apply them to forecast invasion risk</li>
+            <li><strong>Brood parasitic bird symbionts:</strong> Feather mites on cuckoos and their hosts reveal how horizontal transmission shapes host specificity and codiversification at macroevolutionary scales</li>
+            <li><strong>Dust mite allergen genomics:</strong> Analyzing <em>Dermatophagoides</em> genomes to understand allergen diversity and identify targets for immunotherapy</li>
+            <li><strong>Ancient soil mites:</strong> Reconstructing the evolutionary history and timeline of mites in ancient soils using comparative genomics</li>
+          </ul>
+        </div>
+        <div class="detail-section">
+          <h4>Selected publications</h4>
+          <div class="detail-papers">
+            <div class="detail-paper"><div class="pt"><a href="https://www.nature.com/articles/s41467-024-49515-3" target="_blank" style="color:inherit">Predicting host range expansion in parasitic mites using a global mammalian–acarine dataset</a></div><div class="pj">Klimov PB*, He Q* — Nature Communications, 2024</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://www.nature.com/articles/s42003-023-05535-1" target="_blank" style="color:inherit">Horizontal transmission maintains host specificity and codiversification of symbionts in a brood parasitic host</a></div><div class="pj">Pedroso LGA, Klimov PB, He Q* et al. — Communications Biology, 2023</div></div>
+            <div class="detail-paper"><div class="pt"><a href="https://www.nature.com/articles/s41598-025-96115-2" target="_blank" style="color:inherit">The evolutionary history and timeline of mites in ancient soils</a></div><div class="pj">Klimov PB, He Q et al. — Scientific Reports, 2025</div></div>
+            <div class="detail-paper"><div class="pt">Frequent presence of major dust mite allergens in human digestive tissues of children with gastritis</div><div class="pj">Zhou Y, He Q* et al. — Allergy, 2023</div></div>
+          </div>
+        </div>
+        <div class="detail-section">
+          <h4>Data resources</h4>
+          <ul class="detail-bullets">
+            <li><strong>Global Mammal–Mite Association Database</strong> — 10,000+ records across 1,300+ mammal species (<a href="https://zenodo.org/records/11130648" target="_blank">Zenodo</a>)</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const overlay = document.getElementById('detailOverlay');
+const tagEl = document.getElementById('detailTag');
+const labels = { falciparum: 'P. falciparum', ecoevo: 'Eco-evo theory', structural: 'Structural genomics', mites: 'Host–parasite' };
+
+function openPanel(id) {
+  document.querySelectorAll('#detailOverlay .detail-content').forEach(el => el.classList.remove('active'));
+  const target = document.getElementById('dc-' + id);
+  if (target) target.classList.add('active');
+  tagEl.textContent = labels[id] || '';
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('detailPanel').scrollTop = 0;
+}
+
+function closePanel() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+overlay.addEventListener('click', function(e) {
+  if (e.target === overlay) closePanel();
+});
+
+document.querySelectorAll('.research-card').forEach(card => {
+  card.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+  });
+});
+</script>
+
+<hr class="div">
+
+<div class="footer-wrap" id="contact">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">The He Lab</div>
+      <div class="footer-info">
+        Department of Biological Sciences<br>
+        Purdue University · West Lafayette, IN<br>
+        heqixin(at)purdue(dot)edu
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-end;">
+      <div class="footer-info" style="text-align:right;">
+        <a href="https://scholar.google.com/citations?user=WajKQtsAAAAJ" target="_blank">Google Scholar</a>
+      </div>
+      <img src="photos/lab-logo.png" alt="He Lab" style="height:48px;width:auto;opacity:0.7;" onerror="this.style.display='none'">
+    </div>
+  </div>
+</div>
