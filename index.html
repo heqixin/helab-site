@@ -23,14 +23,14 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg:      #0E1525; --surface: #172035; --surface2: #1C2840;
-    --text:    #EEF2FF; --muted: #8A95B5; --subtle: #5C6585;
+    --text:    #EEF2FF; --muted: #B4BCDA; --subtle: #8A96B8;
     --border:  #263147; --navy: #7B9EF5; --navy-bg: #162038;
     --teal:    #2DD4BF; --teal-bg: #0D2E2B;
   }
 }
 :root[data-theme="dark"] {
   --bg:      #0E1525; --surface: #172035; --surface2: #1C2840;
-  --text:    #EEF2FF; --muted: #8A95B5; --subtle: #5C6585;
+  --text:    #EEF2FF; --muted: #B4BCDA; --subtle: #8A96B8;
   --border:  #263147; --navy: #7B9EF5; --navy-bg: #162038;
   --teal:    #2DD4BF; --teal-bg: #0D2E2B;
 }
@@ -58,6 +58,8 @@ nav { position: sticky; top: 0; z-index: 100; background: var(--surface); border
 .hero-deco-antibodies { right: -30px; top: -20px; width: 360px; height: auto; }
 .hero-deco-parasites { left: -10px; bottom: -30px; width: 280px; height: auto; transform: scaleX(-1); }
 .nav-logo { height: 28px; width: auto; vertical-align: middle; margin-right: 7px; display: inline-block; }
+.theme-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: transparent; cursor: pointer; color: var(--muted); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s, color 0.15s; }
+.theme-btn:hover { background: var(--border); color: var(--text); }
 .bio-av-wrap { position: relative; width: 110px; height: 110px; margin: 0 auto 20px; }
 .bio-av-photo { position: absolute; inset: 0; width: 110px; height: 110px; border-radius: 50%; object-fit: cover; object-position: center top; z-index: 1; border: 3px solid var(--border); }
 .bio-av-init { width: 110px; height: 110px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--ff-d); font-size: 1.6rem; font-weight: 600; position: absolute; inset: 0; }
@@ -212,6 +214,9 @@ hr.div { border: none; border-top: 1px solid var(--border); }
       <a href="#software">Software</a>
       <a href="#contact">Contact</a>
     </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle dark/light mode" onclick="toggleTheme()">
+      <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+    </button>
   </div>
 </nav>
 
@@ -273,8 +278,8 @@ hr.div { border: none; border-top: 1px solid var(--border); }
     </div>
     <div class="research-card" onclick="openPanel('mites')" role="button" tabindex="0" aria-label="Explore host-parasite research">
       <span class="rtag">Host–parasite</span>
-      <h3>Host range expansion in mites &amp; symbionts</h3>
-      <p>Using global mammalian–acarine datasets and statistical models, we predict when parasites switch hosts and how transmission mode shapes host specificity and codiversification.</p>
+      <h3>Macro & Microevolution of Mites</h3>
+      <p>We study host-parasite range expansion in mammal-mites, allergen evolution in house dust mites and macroevolution of deep soil mites.</p>
       <span class="card-cta">Explore →</span>
     </div>
   </div>
@@ -672,6 +677,36 @@ bioOverlay.addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeBio(); closePanel(); }
 });
+
+// THEME TOGGLE
+const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+const SUN  = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+
+function isDarkNow() {
+  const t = document.documentElement.getAttribute('data-theme');
+  if (t === 'dark') return true;
+  if (t === 'light') return false;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+function updateThemeIcon() {
+  document.getElementById('themeIcon').innerHTML = isDarkNow() ? SUN : MOON;
+}
+
+function toggleTheme() {
+  const next = isDarkNow() ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('theme', next); } catch(e) {}
+  updateThemeIcon();
+}
+
+(function() {
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  } catch(e) {}
+  updateThemeIcon();
+})();
 
 document.querySelectorAll('.person-card').forEach(card => {
   card.addEventListener('keydown', function(e) {
