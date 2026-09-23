@@ -431,6 +431,17 @@ hr.div { border: none; border-top: 1px solid var(--border); }
       <span class="card-cta" style="font-size:0.7rem;margin-top:2px;">Bio →</span>
     </div>
 
+    <div class="person-card" onclick="openBio('clayton')" role="button" tabindex="0" aria-label="Clayton Walden bio">
+      <div class="avatar-wrap">
+        <img class="person-photo" src="photos/clayton-walden.png" alt="Clayton Walden" onerror="this.style.display='none'">
+        <div class="avatar" style="background:#1E3A5F;color:#93C5FD;">CW</div>
+      </div>
+      <div class="person-name">Clayton Walden</div>
+      <div class="person-role">Undergraduate Student</div>
+      <div class="person-note">Antibody epitopes · structural genomics</div>
+      <span class="card-cta" style="font-size:0.7rem;margin-top:2px;">Bio →</span>
+    </div>
+
 
   </div>
 
@@ -667,7 +678,7 @@ hr.div { border: none; border-top: 1px solid var(--border); }
       
       <!-- Ruining Wang -->
       <div class="detail-content" id="bio-ruining">
-        <div class="bio-av-wrap"><img class="bio-av-photo" src="photos/ruining-wang.png" alt="Pavel Klimov" onerror="this.style.display='none'"><div class="bio-av-init" style="background:#3B2F0D;color:#F5DFA0;">RW</div></div>
+        <div class="bio-av-wrap"><img class="bio-av-photo" src="photos/ruining-wang.png" alt="Ruining Wang" onerror="this.style.display=’none’"><div class="bio-av-init" style="background:#3B2F0D;color:#F5DFA0;">RW</div></div>
         <h2>Ruining Wang</h2>
         <div class="detail-section">
           <h4>Role</h4>
@@ -679,6 +690,20 @@ hr.div { border: none; border-top: 1px solid var(--border); }
         </div>
       </div>
 
+      <!-- Clayton Walden -->
+      <div class="detail-content" id="bio-clayton">
+        <div class="bio-av-wrap"><img class="bio-av-photo" src="photos/clayton-walden.png" alt="Clayton Walden" onerror="this.style.display=’none’"><div class="bio-av-init" style="background:#1E3A5F;color:#93C5FD;">CW</div></div>
+        <h2>Clayton Walden</h2>
+        <div class="detail-section">
+          <h4>Role</h4>
+          <p>Undergraduate Student</p>
+        </div>
+        <div class="detail-section">
+          <h4>Bio</h4>
+          <p>I am interested in how the immune system chooses which parts of a pathogen to attack, and whether those choices are predictable from the pathogen’s own evolutionary history. Currently, my work tests whether selection signatures mapped onto viral protein surfaces line up with the epitopes human antibody responses actually converge on, using influenza hemagglutinin and neuraminidase as the main system. I have been analyzing antibody binding frequency across polyclonal repertoires alongside structural data from cryo-EM and EMPEM studies, with the aim of turning sequence-level diversity statistics into something useful for antigen design. Working at this level of the immune response has given me a foundation in immunology and infectious disease that I expect to carry into clinical training, where understanding why a vaccine or therapeutic works matters as much as knowing that it does. Outside of the lab, I like to exercise, including going on walks and trails as well as watching reality TV series.</p>
+        </div>
+      </div>
+
 
     </div>
   </div>
@@ -687,7 +712,7 @@ hr.div { border: none; border-top: 1px solid var(--border); }
 <script>
 const bioOverlay = document.getElementById('bioOverlay');
 const bioTag = document.getElementById('bioTag');
-const bioLabels = { qixin: 'PI', jiawei: 'Postdoc', pavel: 'Postdoc', james: 'Grad student', brad: 'Grad student', pradyut: 'Grad student' };
+const bioLabels = { qixin: 'PI', jiawei: 'Postdoc', pavel: 'Postdoc', james: 'Grad student', brad: 'Grad student', pradyut: 'Grad student', ruining: 'Undergrad', clayton: 'Undergrad' };
 
 function openBio(id) {
   document.querySelectorAll('#bioOverlay .detail-content').forEach(el => el.classList.remove('active'));
